@@ -166,7 +166,11 @@ class GeocodableBehavior extends Behavior
                 'latitudeColumnConstant'    => $this->getColumnConstant('latitude_column', $builder),
             );
 
-            $script .= $this->renderTemplate('objectGetGeocoder', $templateOptions);
+            if($templateOptions['geocoderProvider'] != 'old') {
+                $script .= $this->renderTemplate('objectGetGeocoder', $templateOptions);
+            } else {
+                $script .= $this->renderTemplate('objectOldGetGeocoder', $templateOptions);
+            }
             $script .= $this->renderTemplate('objectGeocode', $templateOptions);
             if ($templateOptions['geocodeAddress']) {
                 $script .= $this->renderTemplate('objectGetAddressParts', $templateOptions);
@@ -186,6 +190,7 @@ class GeocodableBehavior extends Behavior
     public function getQueryBuilderModifier()
     {
         if (null === $this->queryBuilderModifier) {
+            require_once dirname(__FILE__) . '/GeocodableBehaviorQueryBuilderModifier.php';
             $this->queryBuilderModifier = new GeocodableBehaviorQueryBuilderModifier($this);
         }
 
