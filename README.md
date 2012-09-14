@@ -13,6 +13,6 @@ configuration file:
 propel.behavior.geocodable.class = path.to.GeocodableBehavior
 ```
 
-Add the behavior in your schema, and set the geocoder_provide to "old"
+Add the behavior in your schema, and set the geocoder_provider to "old"
 
 Add OldGeocoder.php to the runtime path.
